@@ -42,7 +42,7 @@ filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim
         peak1.rt <- peak1$rt
 
         #print(paste("Working on peak",i,". Counts are",testCount1,"and",testCount2))
-        print(paste0("Working on peak ",i,". Num discarded: " ))
+        print(paste0("Working on peak ",i,". Num discarded: ", testCount1, " -- ", testCount2 ))
         
         if(!(ref.type[[i]] %in% names(to.elim.1)) && !(ref.type[[i]] %in% names(to.elim.2)) ) {
 
@@ -80,7 +80,7 @@ filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim
                             if(massShiftList1[[elim]][[2]] == "-"){
                                 # Peak is mass shifted lower
                                 if((peak2.mz <= (peak1.mz - dm.low)) && (peak2.mz >= (peak1.mz - dm.high)) ){
-                                    testCount2 <<- testCount2 + 1
+                                    testCount1 <<- testCount1 + 1
                                     ref.type[[j]] <- elim
                                     ref.dir[[j]] <- "lower"
                                     ref.parent[[j]] <- as.character(i)
@@ -108,7 +108,7 @@ filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim
                             if(massShiftList2[[elim]][[2]] == "-"){
                                 # Peak is mass shifted lower
                                 if((peak2.mz <= (peak1.mz - dm.low)) && (peak2.mz >= (peak1.mz - dm.high)) ){
-                                    testCount2 <<- testCount2 + 1
+                                    testCount1 <<- testCount1 + 1
                                     ref.type[[j]] <- elim
                                     ref.dir[[j]] <- "lower"
                                     ref.parent[[j]] <- as.character(i)
@@ -155,7 +155,7 @@ filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim
                             if(massShiftList2[[elim]][[2]] == "-"){
                                 # Peak is mass shifted lower
                                 if((peak2.mz <= (peak1.mz - dm.low)) && (peak2.mz >= (peak1.mz - dm.high)) ){
-                                    testCount2 <<- testCount2 + 1
+                                    testCount1 <<- testCount1 + 1
                                     ref.type[[j]] <- elim
                                     ref.dir[[j]] <- "lower"
                                     ref.parent[[j]] <- as.character(i)
@@ -172,7 +172,9 @@ filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim
     }
     return(list(ref.dir=ref.dir,
                 ref.type=ref.type,
-                ref.parent=ref.parent))
+                ref.parent=ref.parent,
+                keep=which(ref.type==""),
+                discard=which(ref.type!="")))
 }
 
 test_posMode <- function(){
@@ -206,7 +208,7 @@ test_negMode <- function(){
     names(out.rose) <- c("id", "mz", "rt", "parent", "type")
     write.csv(out.rose, file="negIonFilterTest_top1000.csv", row.names=F, quote=F)
 
-    return(list(all=out, rem.vec=ret$rem.vec, orig=d3))
+    return(list(all=out, rem.vec=ret$rem.vec, orig=d3, ret=ret))
 }
 
 run_full_negMode <- function(){
