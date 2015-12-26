@@ -1,8 +1,9 @@
 Package: sieveFilter
-Title: What the Package Does (one line, title case)
+Title: Filter Fragments and Isotopes From a Sieve Data File
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Matt", "S", email = "mattthew@gmail.com", role = c("aut", "cre"))
+Description: Filter fragment peaks and all isotopes (of parent peaks and fragments)
+    from a sieve data file.
 Depends: R (>= 3.1.0)
-License: What license is it under?
+License: MIT
 LazyData: true
