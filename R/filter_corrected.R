@@ -22,7 +22,8 @@ testCount2 <- 0
 
 filter <- function(peakFrameIn, massShiftList1=to.elim.1, massShiftList2=to.elim.2, max.rt.drift=max.rt.drift_in){
 
-    # peakFrameIn: this is the peak information (like mass and RT). Peaks are in the rows.
+    # peakFrameIn: this is the peak information (like mass and RT). Peaks are in the rows. Must have at least two
+    #       columns I guess -- one named "mz" and one named "rt". Both must be numeric.
     # massShiftList1: this is a list of mass shift ranges to eliminate. Each entry in this list
     #       is also a list that has "min" and "max" entries for the range. Peaks that are found as shifts from this list
     #       are removed, but shifts from massShiftList2 are still calculated off of these removed peaks. This is to enable
